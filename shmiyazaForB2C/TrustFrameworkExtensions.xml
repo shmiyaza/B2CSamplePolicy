@@ -1,0 +1,371 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TrustFrameworkPolicy 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+  xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06" 
+  PolicySchemaVersion="0.3.0.0" 
+  TenantId="shmiyazaForB2C.onmicrosoft.com" 
+  PolicyId="B2C_1A_TrustFrameworkExtensions" 
+  PublicPolicyUri="http://shmiyazaForB2C.onmicrosoft.com/B2C_1A_TrustFrameworkExtensions">
+  
+  <BasePolicy>
+    <TenantId>shmiyazaForB2C.onmicrosoft.com</TenantId>
+    <PolicyId>B2C_1A_TrustFrameworkBase</PolicyId>
+  </BasePolicy>
+
+ <BuildingBlocks>
+    <ClaimsSchema>
+      <ClaimType Id="identityProviderAccessToken">
+      <DisplayName>Identity Provider Access Token</DisplayName>
+      <DataType>string</DataType>
+      <AdminHelpText>Stores the access token of the identity provider.</AdminHelpText>
+      </ClaimType>  
+    </ClaimsSchema>
+
+    <ContentDefinitions>
+
+      <!-- This content definition is to render an error page that displays unhandled errors. -->
+        <ContentDefinition Id="api.error">
+        <LoadUri>~/tenant/templates/AzureBlue/exception.cshtml</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:globalexception:1.2.0</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Error page</Item>
+        </Metadata>
+      </ContentDefinition>
+
+      <ContentDefinition Id="api.idpselections">
+        <LoadUri>~/tenant/templates/AzureBlue/idpSelector.cshtml</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:providerselection:1.2.0</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Idp selection page</Item>
+          <Item Key="language.intro">Sign in</Item>
+        </Metadata>
+      </ContentDefinition>
+
+      <ContentDefinition Id="api.idpselections.signup">
+        <LoadUri>~/tenant/templates/AzureBlue/idpSelector.cshtml</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:providerselection:1.2.0</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Idp selection page</Item>
+          <Item Key="language.intro">Sign up</Item>
+        </Metadata>
+      </ContentDefinition>
+
+      <ContentDefinition Id="api.signuporsignin">
+        <LoadUri>~/tenant/templates/AzureBlue/unified.cshtml</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:unifiedssp:1.2.0</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Signin and Signup</Item>
+        </Metadata>
+      </ContentDefinition>
+
+      <ContentDefinition Id="api.selfasserted">
+        <LoadUri>~/tenant/templates/AzureBlue/selfAsserted.cshtml</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:1.2.0</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Collect information from user page</Item>
+        </Metadata>
+      </ContentDefinition>
+
+      <ContentDefinition Id="api.selfasserted.profileupdate">
+        <LoadUri>~/tenant/templates/AzureBlue/selfAsserted.cshtml</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:1.2.0</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Collect information from user page</Item>
+        </Metadata>
+      </ContentDefinition>
+
+      <ContentDefinition Id="api.localaccountsignup">
+        <LoadUri>~/tenant/templates/AzureBlue/selfAsserted.cshtml</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:1.2.0</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Local account sign up page</Item>
+        </Metadata>
+      </ContentDefinition>
+
+      <ContentDefinition Id="api.localaccountpasswordreset">
+        <LoadUri>~/tenant/templates/AzureBlue/selfAsserted.cshtml</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:1.2.0</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Local account change password page</Item>
+        </Metadata>
+      </ContentDefinition>
+
+    </ContentDefinitions>
+
+  </BuildingBlocks>
+
+  <ClaimsProviders>
+
+    <ClaimsProvider>
+      <DisplayName>Facebook</DisplayName>
+      <TechnicalProfiles>
+        <TechnicalProfile Id="Facebook-OAUTH">
+          <Metadata>
+            <Item Key="client_id">677593313070362</Item>
+            <Item Key="scope">email public_profile</Item>
+            <Item Key="ClaimsEndpoint">https://graph.facebook.com/me?fields=id,first_name,last_name,name,email</Item>
+          </Metadata>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="identityProviderAccessToken" PartnerClaimType="{oauth2:access_token}" /> 
+          </OutputClaims>
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+
+
+    <ClaimsProvider>
+      <DisplayName>Local Account SignIn</DisplayName>
+      <TechnicalProfiles>
+        <TechnicalProfile Id="login-NonInteractive">
+          <Metadata>
+            <Item Key="client_id">c3487db6-dddd-4d91-b923-a9da69632bda</Item>
+            <Item Key="IdTokenAudience">1b026865-6ade-4432-b3dc-e731299a573c</Item>
+          </Metadata>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="client_id" DefaultValue="c3487db6-dddd-4d91-b923-a9da69632bda" />
+            <InputClaim ClaimTypeReferenceId="resource_id" PartnerClaimType="resource" DefaultValue="1b026865-6ade-4432-b3dc-e731299a573c" />
+          </InputClaims>
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+
+    <ClaimsProvider>
+      <Domain>fabrikam.com</Domain>
+      <DisplayName>Federation with Fabrikam tenant</DisplayName>
+      <TechnicalProfiles>
+        <TechnicalProfile Id="AzureADB2CFabrikam-OpenIdConnect">
+        <DisplayName>Fabrikam</DisplayName>
+        <Protocol Name="OpenIdConnect"/>
+        <Metadata>
+          <!-- Update the Client ID below to the Application ID -->
+          <Item Key="client_id">08af3061-d67f-497a-b9d8-cf0f66e6abd5</Item>
+          <!-- Update the metadata URL with the other Azure AD B2C tenant name and policy name -->
+          <Item Key="METADATA">https://shmiyazab2c.b2clogin.com/shmiyazab2c.onmicrosoft.com/B2C_1A_SIGNUP_SIGNIN/v2.0/.well-known/openid-configuration</Item>
+          <Item Key="UsePolicyInRedirectUri">false</Item>
+          <Item Key="response_types">code</Item>
+          <Item Key="scope">openid</Item>
+          <Item Key="response_mode">form_post</Item>
+          <Item Key="HttpBinding">POST</Item>
+        </Metadata>
+        <CryptographicKeys>
+          <Key Id="client_secret" StorageReferenceId="B2C_1A_FabrikamAppSecret"/>
+        </CryptographicKeys>
+        <OutputClaims>
+          <OutputClaim ClaimTypeReferenceId="issuerUserId" PartnerClaimType="sub" />
+          <OutputClaim ClaimTypeReferenceId="givenName" PartnerClaimType="given_name" />
+          <OutputClaim ClaimTypeReferenceId="surname" PartnerClaimType="family_name" />
+          <OutputClaim ClaimTypeReferenceId="displayName" PartnerClaimType="name" />
+          <OutputClaim ClaimTypeReferenceId="email" PartnerClaimType="email" />
+          <OutputClaim ClaimTypeReferenceId="identityProvider" PartnerClaimType="iss"  />
+          <OutputClaim ClaimTypeReferenceId="authenticationSource" DefaultValue="socialIdpAuthentication" AlwaysUseDefaultValue="true" />
+          <OutputClaim ClaimTypeReferenceId="otherMails" PartnerClaimType="emails"/> 
+          <OutputClaim ClaimTypeReferenceId="identityProviderAccessToken" PartnerClaimType="{oauth2:access_token}" />   
+        </OutputClaims>
+        <OutputClaimsTransformations>
+          <OutputClaimsTransformation ReferenceId="CreateRandomUPNUserName" />
+          <OutputClaimsTransformation ReferenceId="CreateUserPrincipalName" />
+          <OutputClaimsTransformation ReferenceId="CreateAlternativeSecurityId" />
+        </OutputClaimsTransformations>
+        <UseTechnicalProfileForSessionManagement ReferenceId="SM-SocialLogin"/>
+      </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+
+    <ClaimsProvider>
+      <Domain>github.com</Domain>
+      <DisplayName>GitHub</DisplayName>
+        <TechnicalProfiles>
+        <TechnicalProfile Id="GitHub-OAuth2">
+          <DisplayName>GitHub</DisplayName>
+          <Protocol Name="OAuth2" />
+          <Metadata>
+            <Item Key="ProviderName">github.com</Item>
+            <Item Key="authorization_endpoint">https://github.com/login/oauth/authorize</Item>
+            <Item Key="AccessTokenEndpoint">https://github.com/login/oauth/access_token</Item>
+            <Item Key="ClaimsEndpoint">https://api.github.com/user</Item>
+            <Item Key="HttpBinding">GET</Item>
+            <Item Key="scope">read:user user:email</Item>
+            <Item Key="UsePolicyInRedirectUri">0</Item>
+            <Item Key="BearerTokenTransmissionMethod">AuthorizationHeader</Item>  
+            <Item Key="UserAgentForClaimsExchange">CPIM-Basic/{tenant}/{policy}</Item>
+            <!-- Update the Client ID below to the Application ID -->
+            <Item Key="client_id">2a7f380f6e9c4ebb822a</Item>
+          </Metadata>
+          <CryptographicKeys>
+            <Key Id="client_secret" StorageReferenceId="B2C_1A_GitHubSecret"/>
+          </CryptographicKeys>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="displayName" PartnerClaimType="name" />
+            <OutputClaim ClaimTypeReferenceId="email" PartnerClaimType="email" />
+            <OutputClaim ClaimTypeReferenceId="numericUserId" PartnerClaimType="id" />
+            <OutputClaim ClaimTypeReferenceId="issuerUserId" />
+            <OutputClaim ClaimTypeReferenceId="identityProvider" DefaultValue="github.com" AlwaysUseDefaultValue="true" />
+            <OutputClaim ClaimTypeReferenceId="authenticationSource" DefaultValue="socialIdpAuthentication" AlwaysUseDefaultValue="true" />
+            <OutputClaim ClaimTypeReferenceId="identityProviderAccessToken" PartnerClaimType="{oauth2:access_token}" /> 
+          </OutputClaims>
+          <OutputClaimsTransformations>
+            <OutputClaimsTransformation ReferenceId="CreateIssuerUserId" />
+            <OutputClaimsTransformation ReferenceId="CreateRandomUPNUserName"/>
+            <OutputClaimsTransformation ReferenceId="CreateUserPrincipalName"/>
+            <OutputClaimsTransformation ReferenceId="CreateAlternativeSecurityId"/>
+            <OutputClaimsTransformation ReferenceId="CreateSubjectClaimFromAlternativeSecurityId"/>
+          </OutputClaimsTransformations>
+          <UseTechnicalProfileForSessionManagement ReferenceId="SM-SocialLogin" />
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+
+    <!-- Yahoo with OIDC -->
+    <ClaimsProvider>
+      <Domain>yahoo.co.jp</Domain>
+      <DisplayName>Yahoo! ID</DisplayName>
+      <TechnicalProfiles>
+        <TechnicalProfile Id="Yahoo-OIDC">
+          <DisplayName>Yahoo! ID</DisplayName>
+          <Protocol Name="OAuth2" />
+          <Metadata>
+            <Item Key="ProviderName">yahoo</Item>
+            <Item Key="authorization_endpoint">https://auth.login.yahoo.co.jp/yconnect/v2/authorization</Item>
+            <Item Key="AccessTokenEndpoint">https://auth.login.yahoo.co.jp/yconnect/v2/token</Item>
+            <Item Key="ClaimsEndpoint">https://userinfo.yahooapis.jp/yconnect/v2/attribute</Item>
+            <Item Key="response_types">code</Item>
+            <Item Key="scope">openid profile email</Item>
+            <Item Key="HttpBinding">POST</Item>
+            <Item Key="UsePolicyInRedirectUri">0</Item>
+            <Item Key="response_mode">form_post</Item>
+            <Item Key="client_id">dj00aiZpPTdvNHd0ZmpUdk9GcSZzPWNvbnN1bWVyc2VjcmV0Jng9Yjg-</Item>
+            <Item Key="UserAgentForClaimsExchange">CPIM-Basic/{tenant}/{policy}</Item>
+          </Metadata>
+          <CryptographicKeys>
+            <Key Id="client_secret" StorageReferenceId="B2C_1A_YahooSecret" />
+          </CryptographicKeys>
+          <InputClaims />
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="identityProvider" DefaultValue="yahoo.co.jp" />
+            <OutputClaim ClaimTypeReferenceId="authenticationSource" DefaultValue="socialIdpAuthentication" />
+            <OutputClaim ClaimTypeReferenceId="issuerUserId" PartnerClaimType="sub" />
+            <OutputClaim ClaimTypeReferenceId="displayName" PartnerClaimType="name" />
+            <OutputClaim ClaimTypeReferenceId="email" />
+            <OutputClaim ClaimTypeReferenceId="identityProviderAccessToken" PartnerClaimType="{oauth2:access_token}" /> 
+          </OutputClaims>
+          <OutputClaimsTransformations>
+            <OutputClaimsTransformation ReferenceId="CreateRandomUPNUserName" />
+            <OutputClaimsTransformation ReferenceId="CreateUserPrincipalName" />
+            <OutputClaimsTransformation ReferenceId="CreateAlternativeSecurityId" />
+            <OutputClaimsTransformation ReferenceId="CreateSubjectClaimFromAlternativeSecurityId" />
+          </OutputClaimsTransformations>
+          <UseTechnicalProfileForSessionManagement ReferenceId="SM-SocialLogin" />
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+
+  </ClaimsProviders>
+
+  <UserJourneys>
+    <UserJourney Id="CustomSignUpSignIn">
+      <OrchestrationSteps>
+        <OrchestrationStep Order="1" Type="CombinedSignInAndSignUp" ContentDefinitionReferenceId="api.signuporsignin">
+          <ClaimsProviderSelections>
+            <ClaimsProviderSelection TargetClaimsExchangeId="FacebookExchange" />
+            <ClaimsProviderSelection TargetClaimsExchangeId="GitHubExchange" />
+            <ClaimsProviderSelection ValidationClaimsExchangeId="LocalAccountSigninEmailExchange" />
+            <ClaimsProviderSelection TargetClaimsExchangeId="AzureADB2CFabrikamExchange" />
+            <ClaimsProviderSelection TargetClaimsExchangeId="YahooExchange" />
+          </ClaimsProviderSelections>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="LocalAccountSigninEmailExchange" TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Check if the user has selected to sign in using one of the social providers -->
+        <OrchestrationStep Order="2" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="FacebookExchange" TechnicalProfileReferenceId="Facebook-OAUTH" />
+            <ClaimsExchange Id="GitHubExchange" TechnicalProfileReferenceId="GitHub-OAuth2" />
+            <ClaimsExchange Id="SignUpWithLogonEmailExchange" TechnicalProfileReferenceId="LocalAccountSignUpWithLogonEmail" />
+            <ClaimsExchange Id="AzureADB2CFabrikamExchange" TechnicalProfileReferenceId="AzureADB2CFabrikam-OpenIdConnect" />
+            <ClaimsExchange Id="YahooExchange" TechnicalProfileReferenceId="Yahoo-OIDC" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- For social IDP authentication, attempt to find the user account in the directory. -->
+        <OrchestrationStep Order="3" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>authenticationSource</Value>
+              <Value>localAccountAuthentication</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="AADUserReadUsingAlternativeSecurityId" TechnicalProfileReferenceId="AAD-UserReadUsingAlternativeSecurityId-NoError" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Show self-asserted page only if the directory does not have the user account already (i.e. we do not have an objectId). 
+          This can only happen when authentication happened using a social IDP. If local account was created or authentication done
+          using ESTS in step 2, then an user account must exist in the directory by this time. -->
+        <OrchestrationStep Order="4" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="SelfAsserted-Social" TechnicalProfileReferenceId="SelfAsserted-Social" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- This step reads any user attributes that we may not have received when authenticating using ESTS so they can be sent 
+          in the token. -->
+        <OrchestrationStep Order="5" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>authenticationSource</Value>
+              <Value>socialIdpAuthentication</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="AADUserReadWithObjectId" TechnicalProfileReferenceId="AAD-UserReadUsingObjectId" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+        <!-- The previous step (SelfAsserted-Social) could have been skipped if there were no attributes to collect 
+             from the user. So, in that case, create the user in the directory if one does not already exist 
+             (verified using objectId which would be set from the last step if account was created in the directory. -->
+        <OrchestrationStep Order="6" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="AADUserWrite" TechnicalProfileReferenceId="AAD-UserWriteUsingAlternativeSecurityId" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+ 
+        <OrchestrationStep Order="7" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+ 
+      </OrchestrationSteps>
+      <ClientDefinition ReferenceId="DefaultWeb" />
+    </UserJourney>
+	</UserJourneys>
+
+</TrustFrameworkPolicy>
