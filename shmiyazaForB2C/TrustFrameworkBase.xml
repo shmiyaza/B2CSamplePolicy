@@ -384,7 +384,8 @@
       </ClientDefinition>
     </ClientDefinitions>
 
-    <ContentDefinitions>
+    <!-- Move to TrustFrameworkExtensions.xml -->
+    <!-- <ContentDefinitions>
 
       <!-- This content definition is to render an error page that displays unhandled errors. -->
       <ContentDefinition Id="api.error">
@@ -461,7 +462,7 @@
         </Metadata>
       </ContentDefinition>
 
-    </ContentDefinitions>
+    </ContentDefinitions> -->
   </BuildingBlocks>
 
   <!--
@@ -1044,7 +1045,8 @@
 
   <UserJourneys>
 
-    <UserJourney Id="SignUpOrSignIn">
+    <!-- Move to TrustFrameworkExtensions.xml -->
+    <!-- <UserJourney Id="SignUpOrSignIn">
       <OrchestrationSteps>
       
         <OrchestrationStep Order="1" Type="CombinedSignInAndSignUp" ContentDefinitionReferenceId="api.signuporsignin">
@@ -1133,7 +1135,7 @@
  
       </OrchestrationSteps>
       <ClientDefinition ReferenceId="DefaultWeb" />
-    </UserJourney>
+    </UserJourney> -->
 
     <UserJourney Id="ProfileEdit">
       <OrchestrationSteps>

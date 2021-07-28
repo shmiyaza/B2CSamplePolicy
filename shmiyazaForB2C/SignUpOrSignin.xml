@@ -7,9 +7,6 @@
   TenantId="shmiyazaForB2C.onmicrosoft.com"
   PolicyId="B2C_1A_signup_signin"
   PublicPolicyUri="http://shmiyazaForB2C.onmicrosoft.com/B2C_1A_signup_signin"
-  
-  DeploymentMode="Development"
-  UserJourneyRecorderEndpoint="urn:journeyrecorder:applicationinsights"
   >
 
   <BasePolicy>
@@ -20,7 +17,6 @@
   <RelyingParty>
     <DefaultUserJourney ReferenceId="CustomSignUpSignIn" />
     <UserJourneyBehaviors>
-      <JourneyInsights TelemetryEngine="ApplicationInsights" InstrumentationKey="ad98b5b1-6a37-4bb1-9074-fcbf340338a4" DeveloperMode="true" ClientEnabled="true" ServerEnabled="true" TelemetryVersion="1.0.0" />
       <ScriptExecution>Allow</ScriptExecution>  
     </UserJourneyBehaviors>
     <TechnicalProfile Id="PolicyProfile">
@@ -34,6 +30,7 @@
         <OutputClaim ClaimTypeReferenceId="objectId" PartnerClaimType="sub"/>
         <OutputClaim ClaimTypeReferenceId="identityProvider" />
         <OutputClaim ClaimTypeReferenceId="tenantId" AlwaysUseDefaultValue="true" DefaultValue="{Policy:TenantObjectId}" />
+        <!-- add output claim to pass access_token to application -->
         <OutputClaim ClaimTypeReferenceId="identityProviderAccessToken" PartnerClaimType="idp_access_token"/>
       </OutputClaims>
       <SubjectNamingInfo ClaimType="sub" />

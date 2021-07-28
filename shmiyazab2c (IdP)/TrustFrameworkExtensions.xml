@@ -34,9 +34,9 @@
             <Item Key="scope">email public_profile</Item>
             <Item Key="ClaimsEndpoint">https://graph.facebook.com/me?fields=id,first_name,last_name,name,email</Item>
           </Metadata>
-          <OutputClaims>
+          <!-- <OutputClaims>
             <OutputClaim ClaimTypeReferenceId="identityProviderAccessToken" PartnerClaimType="{oauth2:access_token}" />
-          </OutputClaims>
+          </OutputClaims> -->
         </TechnicalProfile>
       </TechnicalProfiles>
     </ClaimsProvider>
@@ -55,6 +55,7 @@
             <InputClaim ClaimTypeReferenceId="resource_id" PartnerClaimType="resource" DefaultValue="eed20383-6027-4215-a63d-fedaa42393bc" />
           </InputClaims>
           <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="identityProviderAccessToken" PartnerClaimType="{oauth2:access_token}" />
           </OutputClaims>
         </TechnicalProfile>
       </TechnicalProfiles>

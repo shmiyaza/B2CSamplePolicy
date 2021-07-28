@@ -138,6 +138,7 @@
       </TechnicalProfiles>
     </ClaimsProvider>
 
+    <!-- Another Azure AD B2C (shmiyazab2c.onmicrosoft.com)  -->
     <ClaimsProvider>
       <Domain>fabrikam.com</Domain>
       <DisplayName>Federation with Fabrikam tenant</DisplayName>
